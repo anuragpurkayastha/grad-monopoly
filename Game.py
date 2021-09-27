@@ -1,8 +1,7 @@
 """
     Game.py
 """
-import Player
-import Board
+import Player import Player
 from Square import Square
 import json
 
@@ -26,6 +25,18 @@ class Game:
 
     def getBoard(self):
         return self.board
+
+    def createPlayers(self):
+
+        players.append(Player("Peter"))
+        players.append(Player("Billy"))
+        players.append(Player("Charlotte"))
+        players.append(Player("Sweedal"))
+
+    def getPlayers(self):
+        return self.players
+
+        
 
 if __name__ == "__main__":
 
