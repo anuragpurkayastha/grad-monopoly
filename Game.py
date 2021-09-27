@@ -1,7 +1,7 @@
 """
     Game.py
 """
-import Player import Player
+from Player import Player
 from Square import Square
 import json
 
@@ -28,10 +28,10 @@ class Game:
 
     def createPlayers(self):
 
-        players.append(Player("Peter"))
-        players.append(Player("Billy"))
-        players.append(Player("Charlotte"))
-        players.append(Player("Sweedal"))
+        self.players.append(Player.withParams(name = "Peter"))
+        self.players.append(Player.withParams(name = "Billy"))
+        self.players.append(Player.withParams(name = "Charlotte"))
+        self.players.append(Player.withParams(name = "Sweedal"))
 
     def getPlayers(self):
         return self.players
@@ -41,9 +41,19 @@ class Game:
 if __name__ == "__main__":
 
     game = Game()
+
     game.createBoard()
+    game.createPlayers()
 
     board = game.getBoard()
+    players = game.getPlayers()
+
+    print(players)
 
     for i in range(0, len(board)):
         print(board[i].toString())
+
+    print("=" * 50)
+
+    for i in range(0, len(players)):
+        print(players[i].toString())
