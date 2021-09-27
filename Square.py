@@ -13,6 +13,7 @@ class Square:
         self.sqr_type = sqr_type
         self.owner = owner
         self.rent = rent
+        self.owned = False
 
     def getName(self):
         return self.name
@@ -31,6 +32,12 @@ class Square:
 
     def setOwner(self, player):
         self.owner = player
+
+    def isOwned(self):
+        return self.owned
+
+    def setIsOwned(self):
+        self.owned = True
 
     def getRent(self):
         return self.rent
