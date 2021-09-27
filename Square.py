@@ -2,11 +2,11 @@
     Square.py
     Author: Anurag Purkayastha
 """
-import Player
+from Player import Player
 
 class Square:
 
-    def __init__(self, name, price = 0, colour= "", sqr_type = "", owner = "", rent = 0):
+    def __init__(self, name, price = 0, colour= "", sqr_type = "", owner = Player(), rent = 0):
         self.name = name
         self.price = price
         self.colour = colour
@@ -37,3 +37,6 @@ class Square:
 
     def setRent(self, rent):
         self.rent = rent
+
+    def toString(self):
+        return "Name:\t" + self.name + "\nPrice:\t" + str(self.price) + "\nColour:\t" + self.colour + "\nType:\t" + self.sqr_type + "\nOwner:\t" + self.owner.getName() + "\nRent:\t" + str(self.rent)
