@@ -44,6 +44,7 @@ A Square has the following abilities:
 
   * Being bought by a player (change the owner attribute)
   * Increase rent - if a Player owns all properties of the same colour.
+  * Check if owned - is the property on the Square currently owned?
 
 ## Board
 
