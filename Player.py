@@ -8,3 +8,22 @@ class Player:
 
     def __init__(self, name, totalMoney = 16):
         self.name = name
+        self.totalMoney = totalMoney
+
+    def getName(self):
+        return self.name
+
+    def getTotalMoney(self):
+        return self.totalMoney
+
+    def addMoney(self, amt):
+        """
+        Earn money from rent or passing GO.
+        """
+        self.totalMoney += amt
+
+    def isBankrupt(self):
+        return self.totalMoney <= 0
+
+    def spendMoney(self, amt):
+        self.totalMoney -= amt
