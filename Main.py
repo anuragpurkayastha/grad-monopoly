@@ -9,13 +9,24 @@ if __name__ == "__main__":
 
     game.createBoard()
     game.createPlayers()
-    game.loadMoves()
+    game.loadMoves('./specs/rolls_2.json')
 
     # Loop while game is still valid
     while game.isValid():
 
         # Get the next player
+        game.setCurrentPlayer()
+
+        # Get the amount of moves to move the current player
+        game.setCurrentMove()
 
         # Move the player
+        game.movePlayer()
 
-        # Process any money tranfers
+        # Process transactions
+        game.processTransaction()
+
+        # End turn
+        game.endTurn()
+
+    game.announceFinalResults()
