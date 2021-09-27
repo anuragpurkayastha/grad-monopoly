@@ -6,12 +6,7 @@
 """
 class Player:
 
-    def __init__(self):
-        self.name = ""
-        self.totalMoney = 0
-
-    @classmethod
-    def withParams(self, name, totalMoney = 16):
+    def __init__(self, name = "", totalMoney = 16):
         self.name = name
         self.totalMoney = totalMoney
 
@@ -22,16 +17,17 @@ class Player:
         return self.totalMoney
 
     def addMoney(self, amt):
-        """
-        Earn money from rent or passing GO.
-        """
-        self.totalMoney += amt
+
+        if ( amt >= 0 ):
+            self.totalMoney += amt
 
     def isBankrupt(self):
         return self.totalMoney <= 0
 
     def spendMoney(self, amt):
-        self.totalMoney -= amt
+
+        if ( amt >= 0 ):
+            self.totalMoney -= amt
 
     def toString(self):
-        return "Name:\t" + self.name + "\nTotal Money:\t$" + str(self.totalMoney)
+        return "Name:\t\t" + self.name + "\nTotal Money:\t$" + str(self.totalMoney)
