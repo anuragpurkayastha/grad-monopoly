@@ -10,6 +10,10 @@ class Player:
         self.name = name
         self.totalMoney = totalMoney
 
+    def __init__(self):
+        self.name = ""
+        self.totalMoney = 0
+
     def getName(self):
         return self.name
 
