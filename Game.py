@@ -1,13 +1,38 @@
 """
-    Main.py
+    Game.py
 """
 import Player
-import Square
+import Board
+from Square import Square
+import json
+
+class Game:
+
+    def __init__(self):
+        self.board = list()
+        self.players = list()
+
+    def createBoard(self):
+        # Read in the board.json file to create a list of squares
+        with open('specs/board.json') as file:
+            sqr_data = json.load(file)
+
+        for i in range(0, len(sqr_data)):
+            sqr = sqr_data[i]
+            if (sqr['type'] != "go"):
+                self.board.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
+            else:
+                self.board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
+
+    def getBoard(self):
+        return self.board
 
 if __name__ == "__main__":
 
-    player_1 = Player.Player("Anu")
-    square_1 = Square.Square("The Burvale", 1, "Brown", "property", player_1, 100)
+    game = Game()
+    game.createBoard()
 
-    print(square_1.getOwner().getName())
-    
+    board = game.getBoard()
+
+    for i in range(0, len(board)):
+        print(board[i].toString())
