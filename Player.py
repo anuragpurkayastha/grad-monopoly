@@ -9,6 +9,7 @@ class Player:
     def __init__(self, name = "", totalMoney = 16):
         self.name = name
         self.totalMoney = totalMoney
+        self.currentPos = 0 # Each players current position represented as an index of the square the player is currently on
 
     def getName(self):
         return self.name
@@ -21,13 +22,19 @@ class Player:
         if ( amt >= 0 ):
             self.totalMoney += amt
 
-    def isBankrupt(self):
-        return self.totalMoney <= 0
-
     def spendMoney(self, amt):
 
         if ( amt >= 0 ):
             self.totalMoney -= amt
 
+    def isBankrupt(self):
+        return self.totalMoney <= 0
+
+    def getCurrPos(self):
+        return self.currentPos
+
+    def setCurrPos(self, index):
+        self.currentPos = index
+
     def toString(self):
-        return "Name:\t\t" + self.name + "\nTotal Money:\t$" + str(self.totalMoney)
+        return "Name:\t\t" + self.name + "\nTotal Money:\t$" + str(self.totalMoney) + "\nCurrent Position:\t\t" + str(self.currentPos)
