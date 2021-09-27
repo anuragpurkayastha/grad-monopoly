@@ -13,6 +13,8 @@ class Game:
         self.moves = list()
         self.playerIndex = 0    #  Index of the current player
         self.moveIndex = 0      #  Index of the current move
+        self.currPlayer = None  #  The current player
+        self.move = 0           #  How many moves the current player must move
 
     def createBoard(self):
         # Read in the board.json file to create a list of squares
@@ -51,9 +53,97 @@ class Game:
         if( self.moveIndex == len(self.moves)):
             return False
 
-        for i in range(len(self.players)):
+        for player in self.players:
 
-            if self.players[i].isBankrupt():
+            if player.isBankrupt():
                 return False
 
         return True
+
+    def setCurrentPlayer(self):
+        self.currPlayer = self.players[self.playerIndex]
+
+    def getCurrentPlayer(self):
+        return self.currPlayer
+
+    def setCurrentMove(self):
+        self.move = self.moves[self.moveIndex]
+
+    def getCurrentMove(self):
+        return self.move
+
+    def movePlayer(self):
+        """
+        This method moves the player an amount equal to the moves that is predetermined.
+        If it goes beyond the length of the board, then wrap around and earn $1 for the player (for passing GO).
+        0   1   2   3   4   5
+        """
+        # Get the current position of the player on the board
+        playerCurrentPos = self.currPlayer.getCurrPos()
+
+        if ( (playerCurrentPos + self.move) > (len(self.board) - 1) ):
+            self.currPlayer.setCurrPos(self.move - ((len(self.board) - 1) - playerCurrentPos) - 1)
+        else:
+            self.currPlayer.setCurrPos(self.currPlayer.getCurrPos() + self.move)
+
+    def processTransaction(self):
+        # Get the Square that the player is currently on
+        currentSquare = self.board[self.currPlayer.getCurrPos()]
+
+        # If the Square is owned, then current player buys the property
+        # Set rent of Square to non-zero value
+        if not currentSquare.isOwned():
+            self.currPlayer.spendMoney(currentSquare.getPrice())
+            currentSquare.setOwner(self.currPlayer)
+            currentSquare.setIsOwned()
+
+            if self.isAllPropOwned(currentSquare.getColour(), self.currPlayer):
+                currentSquare.setRent(currentSquare.getRent() * 2)
+            else:
+                currentSquare.setRent(5)
+        else:
+            self.currPlayer.spendMoney(currentSquare.getRent())
+
+    def isAllPropOwned(self, colour, player):
+        """
+        Check if all the properties of a particular colour are owned by one player
+        """
+        for square in self.board:
+            if (square.getColour == colour and square.getOwner() != player):
+                return False
+
+        return True
+
+    def endTurn(self):
+        # Next player
+        if (self.playerIndex == (len(self.players) - 1)):
+            self.playerIndex = 0
+        else:
+            self.playerIndex += 1
+
+        # Next move
+        self.moveIndex += 1
+
+    def getWinner(self):
+        max_money = 0
+        winner = None
+
+        for player in self.players:
+            if player.getTotalMoney() > max_money:
+                winner = player
+
+        return winner
+
+    def announceFinalResults(self):
+        """
+        Method to call when the game is ended (game is no longer valid)
+        """
+        winningPlayer = self.getWinner()
+
+        print ("The winner is: " + winningPlayer.getName() + " with $" + str(winningPlayer.getTotalMoney()) + "!!")
+
+        print("\nThe other results:\n")
+
+        for player in self.players:
+            player_det = "\nName:\t\t" + player.getName() + "\nTotal Money:\t$" + str(player.getTotalMoney()) + "\nFinal Position:\t" + self.board[player.getCurrPos()].getName()
+            print (player_det + "\n")
