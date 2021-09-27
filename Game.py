@@ -10,6 +10,9 @@ class Game:
     def __init__(self):
         self.board = list()
         self.players = list()
+        self.moves = list()
+        self.playerIndex = 0    #  Index of the current player
+        self.moveIndex = 0      #  Index of the current move
 
     def createBoard(self):
         # Read in the board.json file to create a list of squares
@@ -23,37 +26,34 @@ class Game:
             else:
                 self.board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
-    def getBoard(self):
-        return self.board
-
     def createPlayers(self):
 
-        self.players.append(Player.withParams(name = "Peter"))
-        self.players.append(Player.withParams(name = "Billy"))
-        self.players.append(Player.withParams(name = "Charlotte"))
-        self.players.append(Player.withParams(name = "Sweedal"))
+        self.players.append(Player(name = "Peter"))
+        self.players.append(Player(name = "Billy"))
+        self.players.append(Player(name = "Charlotte"))
+        self.players.append(Player(name = "Sweedal"))
 
     def getPlayers(self):
         return self.players
 
-        
+    def loadMoves(self,filepath='./specs/rolls_1.json'):
 
-if __name__ == "__main__":
+        with open(filepath) as file:
+            self.moves = json.load(file)
 
-    game = Game()
+    def isValid(self):
+        """
+        Check if the game is still in a valid state. This means the two conditions must be met:
 
-    game.createBoard()
-    game.createPlayers()
+        1. No player is bankrupt
+        2. More moves are still available
+        """
+        if( self.moveIndex == len(self.moves)):
+            return False
 
-    board = game.getBoard()
-    players = game.getPlayers()
+        for i in range(len(self.players)):
 
-    print(players)
+            if self.players[i].isBankrupt():
+                return False
 
-    for i in range(0, len(board)):
-        print(board[i].toString())
-
-    print("=" * 50)
-
-    for i in range(0, len(players)):
-        print(players[i].toString())
+        return True
