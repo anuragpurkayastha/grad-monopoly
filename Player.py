@@ -6,13 +6,14 @@
 """
 class Player:
 
-    def __init__(self, name, totalMoney = 16):
-        self.name = name
-        self.totalMoney = totalMoney
-
     def __init__(self):
         self.name = ""
         self.totalMoney = 0
+
+    @classmethod
+    def withParams(self, name, totalMoney = 16):
+        self.name = name
+        self.totalMoney = totalMoney
 
     def getName(self):
         return self.name
@@ -31,3 +32,6 @@ class Player:
 
     def spendMoney(self, amt):
         self.totalMoney -= amt
+
+    def toString(self):
+        return "Name:\t" + self.name + "\nTotal Money:\t$" + str(self.totalMoney)
