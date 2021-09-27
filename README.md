@@ -12,7 +12,7 @@ The design of the game will involve objects, mainly:
 
   1. Players
   2. Squares - the squares of the game board
-  3. Game - This is the main object which instantatiates Player and Square objects.
+  3. Game - This is the main object which instantatiates the game creating Player and Square objects.
 
 These objects are explained further below.
 
@@ -22,6 +22,7 @@ A Player of the game has the following attributes:
 
   * name
   * totalMoney
+  * currentPos - current position on the board
 
 A Player object has the following abilities:
 
@@ -45,10 +46,6 @@ A Square has the following abilities:
   * Being bought by a player (change the owner attribute)
   * Increase rent - if a Player owns all properties of the same colour.
   * Check if owned - is the property on the Square currently owned?
-
-## Board
-
-A Board object is made up of Square objects, which will be stored in an array.
 
 ## Game
 
@@ -74,8 +71,8 @@ The game logic will be implemented as follows.
     a. If either condition is met => Quit the game and announce the winner.
   2. Get the Player whose turn it is.
   3. Get the amount of moves [x] that the Player must take.
-  4. Move the Player to the Square [x] units away from the Player's current position.
+  4. Move the Player to the Square [x] units away from the Player's current position => update Player's current position.
     a. If the destination Square is beyond the total number of squares (length of the list of Squares) then wrap around.
   5. Check the Square for a pre-existing owner:
     a. If Square is owned, charge current Player rent => Reduce current players totalMoney by amount equal to 'rent' attribute of Square.
-    b. If Square is not owned, then Player buys property => Reduce current player's totalMoney by amount equal to "price" attribute of Square.
+    b. If Square is not owned, then Player buys property => Reduce current player's totalMoney by amount equal to "price" attribute of Square => change ownership property of Square.
