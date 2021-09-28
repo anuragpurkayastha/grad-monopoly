@@ -2,26 +2,55 @@
  Run Woven Monopoly
 """
 from Game import Game
+from Player import Player
+from Square import Square
+import json
 
 if __name__ == "__main__":
 
-    game = Game()
+    #=============== SETUP ===========================
 
-    game.createBoard()
-    game.createPlayers()
-    game.loadMoves('./specs/rolls_2.json')
+    # PLAYERS
+    players = list()
+
+    players.append(Player(name = "Peter"))
+    players.append(Player(name = "Billy"))
+    players.append(Player(name = "Charlotte"))
+    players.append(Player(name = "Sweedal"))
+
+    # BOARD
+    board = list()
+    # Read in the board.json file to create a list of squares
+    with open('specs/board.json') as file:
+        sqr_data = json.load(file)
+
+    for i in range(0, len(sqr_data)):
+        sqr = sqr_data[i]
+        if (sqr['type'] != "go"):
+            board.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
+        else:
+            board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
+
+    # MOVES
+    filepath = './specs/rolls_1.json'
+    moves = list()
+    with open(filepath) as file:
+        moves = json.load(file)
+
+    # SETUP THE GAME
+    game = Game(board = board, players = players, moves = moves)
 
     # Loop while game is still valid
     while game.isValid():
 
-        # Get the next player
-        game.setCurrentPlayer()
+        # Set the next player
+        game.setCurrentPlayer(game.getPlayers()[game.getCurrentPlayerIndex()])
 
-        # Get the amount of moves to move the current player
+        # Set the amount of moves to move the current player
         game.setCurrentMove()
 
-        # Move the player
-        game.movePlayer()
+        # Move the current player
+        game.movePlayer(game.getCurrentPlayer(), game.getCurrentMove())
 
         # Process transactions
         game.processTransaction()
