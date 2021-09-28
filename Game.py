@@ -82,7 +82,7 @@ class Game:
 
         if ( (playerCurrentPos + moves) > (len(self.board) - 1) ):
             # If the player has to wrap around the board then calculate the resulting position.
-            # This is done by checking if the end position (without wrap around) exceeds the length of the board.
+            # This is done by checking if the end position (without wrap around) is beyond the last indicie of the board.
             # Also earn $1 for passing GO
             player.setCurrPos(moves - ((len(self.board) - 1) - playerCurrentPos) - 1)
             player.addMoney(1)
@@ -108,45 +108,54 @@ class Game:
                     # Increase the rent of all the properties
                     self.doubleRent(currentSquare.getColour())
 
-            else:
+            elif (currentSquare.getOwner().getName() != currPlayer.getName()):
                 self.spendRent(currentSquare, currPlayer)
 
     def buyProperty(self, prop, player, rent = 1):
-        """ Function to buy property provided by 'prop' owned by player with rent set to 'rent'"""
+        """
+        Function to buy property provided by 'prop' owned by player with rent set to 'rent'
+        """
+
         player.spendMoney(prop.getPrice())
         prop.setOwner(player)
         prop.setIsOwned()
         prop.setRent(prop.getPrice())
-        print(player.getName() + " just bought " + prop.getName() + " for $" + str(prop.getPrice()))
 
     def doubleRent(self, colour):
-        """ Double the rent of all properties of a particular colour """
+        """
+        Double the rent of all properties of a particular colour
+        """
+
         for square in self.board:
             if (square.getColour() == colour):
                 square.setRent(square.getRent() * 2)
-                print(square.getName() + " (" + square.getColour() + ") doubled rent to $" + str(square.getRent()))
 
     def spendRent(self, prop, renter):
-        """ Process rent payments for property prop from renter to owner """
-        renter.spendMoney(prop.getRent())
+        """
+        Process rent payments for property prop from renter to owner
+        """
 
+        renter.spendMoney(prop.getRent())
         owner = prop.getOwner()
         owner.addMoney(prop.getRent())
 
-        print(renter.getName() + " just paid $" + str(prop.getRent()) + " to " + prop.getOwner().getName() + " for " + prop.getName())
-        
     def isAllPropOwned(self, colour, player):
         """
         Check if all the properties of a particular colour are owned by one player
         """
         for square in self.board:
+
             if (square.getColour() == colour and square.getOwner() != player):
                 return False
 
         return True
 
     def endTurn(self):
-        # Next player
+        """
+        Ending turn means move the player and move indices to the next player and move, respectively.
+        """
+
+        # Next player - wrap around if needed.
         if (self.playerIndex == (len(self.players) - 1)):
             self.playerIndex = 0
         else:
@@ -156,11 +165,16 @@ class Game:
         self.moveIndex += 1
 
     def getWinner(self):
+        """
+        Get the winner of the game - determined by the player with the most money.
+        """
         max_money = 0
         winner = None
 
         for player in self.players:
+
             if (player.getTotalMoney() > max_money):
+
                 winner = player
                 max_money = player.getTotalMoney()
 
@@ -177,5 +191,7 @@ class Game:
         print("\nThe other results:")
 
         for player in self.players:
-            player_det = "\nName:\t\t" + player.getName() + "\nTotal Money:\t$" + str(player.getTotalMoney()) + "\nFinal Position:\t" + self.board[player.getCurrPos()].getName()
+
+            player_det = "\tName: " + player.getName() + "\tTotal Money: $" + str(player.getTotalMoney()) + "\tFinal Position: " + self.board[player.getCurrPos()].getName()
+
             print (player_det)
