@@ -28,6 +28,9 @@ class Game:
             else:
                 self.board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
+    def getBoard(self):
+        return self.board
+
     def createPlayers(self):
 
         self.players.append(Player(name = "Peter"))
@@ -76,40 +79,53 @@ class Game:
         """
         This method moves the player an amount equal to the moves that is predetermined.
         If it goes beyond the length of the board, then wrap around and earn $1 for the player (for passing GO).
-        0   1   2   3   4   5
         """
         # Get the current position of the player on the board
         playerCurrentPos = self.currPlayer.getCurrPos()
 
         if ( (playerCurrentPos + self.move) > (len(self.board) - 1) ):
+            # If the player has to wrap around the board then calculate the resulting position.
+            # This is done by checking if the end position (without wrap around) exceeds the length of the board.
+            # Also earn $1 for passing GO
             self.currPlayer.setCurrPos(self.move - ((len(self.board) - 1) - playerCurrentPos) - 1)
+            self.currPlayer.addMoney(1)
+
         else:
             self.currPlayer.setCurrPos(self.currPlayer.getCurrPos() + self.move)
 
     def processTransaction(self):
+
         # Get the Square that the player is currently on
         currentSquare = self.board[self.currPlayer.getCurrPos()]
 
-        # If the Square is owned, then current player buys the property
-        # Set rent of Square to non-zero value
-        if not currentSquare.isOwned():
-            self.currPlayer.spendMoney(currentSquare.getPrice())
-            currentSquare.setOwner(self.currPlayer)
-            currentSquare.setIsOwned()
+        # If the Square the player is currently on is not "GO" then process a transaction (either buying property or paying rent
+        if currentSquare.getType() != "go":
 
-            if self.isAllPropOwned(currentSquare.getColour(), self.currPlayer):
-                currentSquare.setRent(currentSquare.getRent() * 2)
+            if not currentSquare.isOwned():
+                # If the Square is owned, then current player buys the property
+                # Set rent of Square to non-zero value
+
+                self.currPlayer.spendMoney(currentSquare.getPrice())
+                currentSquare.setOwner(self.currPlayer)
+                currentSquare.setIsOwned()
+                currentSquare.setRent(1)
+
+
+                # Also check if the current player now owns all of the properties of the same colour.
+                if self.isAllPropOwned(currentSquare.getColour(), self.currPlayer):
+
+                    currentSquare.setRent(currentSquare.getRent() * 2)
+
             else:
-                currentSquare.setRent(5)
-        else:
-            self.currPlayer.spendMoney(currentSquare.getRent())
+
+                self.currPlayer.spendMoney(currentSquare.getRent())
 
     def isAllPropOwned(self, colour, player):
         """
         Check if all the properties of a particular colour are owned by one player
         """
         for square in self.board:
-            if (square.getColour == colour and square.getOwner() != player):
+            if (square.getColour() == colour and square.getOwner() != player):
                 return False
 
         return True
@@ -142,8 +158,8 @@ class Game:
 
         print ("The winner is: " + winningPlayer.getName() + " with $" + str(winningPlayer.getTotalMoney()) + "!!")
 
-        print("\nThe other results:\n")
+        print("\nThe other results:")
 
         for player in self.players:
             player_det = "\nName:\t\t" + player.getName() + "\nTotal Money:\t$" + str(player.getTotalMoney()) + "\nFinal Position:\t" + self.board[player.getCurrPos()].getName()
-            print (player_det + "\n")
+            print (player_det)
