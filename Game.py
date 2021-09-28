@@ -46,6 +46,15 @@ class Game:
         with open(filepath) as file:
             self.moves = json.load(file)
 
+    def getMoves(self):
+        return self.moves
+
+    def getMoveIndex(self):
+        return self.moveIndex
+
+    def setMoveIndex(self, index):
+        self.moveIndex = index
+
     def isValid(self):
         """
         Check if the game is still in a valid state. This means the two conditions must be met:
