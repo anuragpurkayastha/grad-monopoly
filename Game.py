@@ -1,53 +1,31 @@
 """
     Game.py
 """
-from Player import Player
-from Square import Square
-import json
-
 class Game:
 
-    def __init__(self):
-        self.board = list()
-        self.players = list()
-        self.moves = list()
+    def __init__(self, board = list(), players = list(), moves = list(), currPlayer = None):
+        self.board = board      # A board is a list of Squares
+        self.players = players  # Players
+        self.moves = moves      # Predetermined moves
         self.playerIndex = 0    #  Index of the current player
         self.moveIndex = 0      #  Index of the current move
-        self.currPlayer = None  #  The current player
+        self.currPlayer = currPlayer  #  The current player
         self.move = 0           #  How many moves the current player must move
-
-    def createBoard(self):
-        # Read in the board.json file to create a list of squares
-        with open('specs/board.json') as file:
-            sqr_data = json.load(file)
-
-        for i in range(0, len(sqr_data)):
-            sqr = sqr_data[i]
-            if (sqr['type'] != "go"):
-                self.board.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
-            else:
-                self.board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
     def getBoard(self):
         return self.board
 
-    def createPlayers(self):
-
-        self.players.append(Player(name = "Peter"))
-        self.players.append(Player(name = "Billy"))
-        self.players.append(Player(name = "Charlotte"))
-        self.players.append(Player(name = "Sweedal"))
-
     def getPlayers(self):
         return self.players
 
-    def loadMoves(self,filepath='./specs/rolls_1.json'):
-
-        with open(filepath) as file:
-            self.moves = json.load(file)
+    def setPlayers(self, players):
+        self.players = players
 
     def getMoves(self):
         return self.moves
+
+    def setMoves(self, moves):
+        self.moves = moves
 
     def getMoveIndex(self):
         return self.moveIndex
@@ -72,8 +50,14 @@ class Game:
 
         return True
 
-    def setCurrentPlayer(self):
-        self.currPlayer = self.players[self.playerIndex]
+    def getCurrentPlayerIndex(self):
+        return self.playerIndex
+
+    def setCurrentPlayerIndex(self, index):
+        self.playerIndex = index
+
+    def setCurrentPlayer(self, player):
+        self.currPlayer = player
 
     def getCurrentPlayer(self):
         return self.currPlayer
@@ -84,28 +68,33 @@ class Game:
     def getCurrentMove(self):
         return self.move
 
-    def movePlayer(self):
+    def movePlayer(self, player, moves):
         """
         This method moves the player an amount equal to the moves that is predetermined.
         If it goes beyond the length of the board, then wrap around and earn $1 for the player (for passing GO).
+        This function takes in two parameters:
+
+            1. player - the player to move
+            2. moves - how many steps the player should move
         """
         # Get the current position of the player on the board
-        playerCurrentPos = self.currPlayer.getCurrPos()
+        playerCurrentPos = player.getCurrPos()
 
-        if ( (playerCurrentPos + self.move) > (len(self.board) - 1) ):
+        if ( (playerCurrentPos + moves) > (len(self.board) - 1) ):
             # If the player has to wrap around the board then calculate the resulting position.
             # This is done by checking if the end position (without wrap around) exceeds the length of the board.
             # Also earn $1 for passing GO
-            self.currPlayer.setCurrPos(self.move - ((len(self.board) - 1) - playerCurrentPos) - 1)
-            self.currPlayer.addMoney(1)
+            player.setCurrPos(moves - ((len(self.board) - 1) - playerCurrentPos) - 1)
+            player.addMoney(1)
 
         else:
-            self.currPlayer.setCurrPos(self.currPlayer.getCurrPos() + self.move)
+            player.setCurrPos(playerCurrentPos + moves)
 
     def processTransaction(self):
 
         # Get the Square that the player is currently on
-        currentSquare = self.board[self.currPlayer.getCurrPos()]
+        currPlayer = self.getCurrentPlayer()
+        currentSquare = self.board[currPlayer.getCurrPos()]
 
         # If the Square the player is currently on is not "GO" then process a transaction (either buying property or paying rent
         if currentSquare.getType() != "go":
