@@ -116,13 +116,15 @@ class Game:
         player.spendMoney(prop.getPrice())
         prop.setOwner(player)
         prop.setIsOwned()
-        prop.setRent(rent)
+        prop.setRent(prop.getPrice())
+        print(player.getName() + " just bought " + prop.getName() + " for $" + str(prop.getPrice()))
 
     def doubleRent(self, colour):
         """ Double the rent of all properties of a particular colour """
         for square in self.board:
             if (square.getColour() == colour):
                 square.setRent(square.getRent() * 2)
+                print(square.getName() + " (" + square.getColour() + ") doubled rent to $" + str(square.getRent()))
 
     def spendRent(self, prop, renter):
         """ Process rent payments for property prop from renter to owner """
@@ -130,6 +132,8 @@ class Game:
 
         owner = prop.getOwner()
         owner.addMoney(prop.getRent())
+
+        print(renter.getName() + " just paid $" + str(prop.getRent()) + " to " + prop.getOwner().getName() + " for " + prop.getName())
         
     def isAllPropOwned(self, colour, player):
         """
@@ -156,8 +160,9 @@ class Game:
         winner = None
 
         for player in self.players:
-            if player.getTotalMoney() > max_money:
+            if (player.getTotalMoney() > max_money):
                 winner = player
+                max_money = player.getTotalMoney()
 
         return winner
 
