@@ -103,20 +103,22 @@ class Game:
                 # If the Square is owned, then current player buys the property
                 # Set rent of Square to non-zero value
 
-                self.currPlayer.spendMoney(currentSquare.getPrice())
-                currentSquare.setOwner(self.currPlayer)
+                currPlayer.spendMoney(currentSquare.getPrice())
+                currentSquare.setOwner(currPlayer)
                 currentSquare.setIsOwned()
-                currentSquare.setRent(1)
-
-
+                currentSquare.setRent(10)
+                
+                print ( currPlayer.getName() + " bought " + currentSquare.getName() + " for $" + str(currentSquare.getPrice()))
                 # Also check if the current player now owns all of the properties of the same colour.
-                if self.isAllPropOwned(currentSquare.getColour(), self.currPlayer):
+                if self.isAllPropOwned(currentSquare.getColour(), currPlayer):
 
                     currentSquare.setRent(currentSquare.getRent() * 2)
 
             else:
-
-                self.currPlayer.spendMoney(currentSquare.getRent())
+                currPlayer.spendMoney(currentSquare.getRent())
+                owningPlayer = currentSquare.getOwner()
+                owningPlayer.addMoney(currentSquare.getRent())
+                print( currPlayer.getName() + " paid rent $" + str(currentSquare.getRent()) + " to " + currentSquare.getOwner().getName() + " for " + currentSquare.getName() + " who now has $" + str(currentSquare.getOwner().getTotalMoney()))
 
     def isAllPropOwned(self, colour, player):
         """
