@@ -100,9 +100,9 @@ class TestGameMethod(unittest.TestCase):
 
         self.assertEqual(player.getCurrPos(), 1)
 
-    def test_process_transaction(self):
+    def test_process_transaction_buy(self):
 
-        # Test buying a property
+        """ Test transaction for buying a property"""
         player = self.game.getPlayers()[0]
         player.setCurrPos(1)
 
@@ -115,18 +115,58 @@ class TestGameMethod(unittest.TestCase):
         self.assertEqual(square.isOwned(), True)
         self.assertEqual(square.getOwner(), player)
 
-        # Test a player paying rent
-        player_2 = self.game.getPlayers()[1]
-        player_2.setCurrPos(1)
+    def test_process_transaction_rent(self):
 
-        self.game.setCurrentPlayer(player_2)
+        """Test transaction for a renter"""
+        # Players
+        owner = self.game.getPlayers()[0]
+        renter = self.game.getPlayers()[1]
+        renter.setCurrPos(1)
+
+        # Setup the current player
+        self.game.setCurrentPlayer(renter)
+
+        # Owner buys the square
+        square = self.game.getBoard()[renter.getCurrPos()]
+        self.game.buyProperty(square, owner, 2)
+
+        # Main method to test
         self.game.processTransaction()
 
-        square_2 = self.game.getBoard()[player_2.getCurrPos()]
-        
-        self.assertEqual(player_2.getTotalMoney(), 15)
-        self.assertEqual(player.getTotalMoney(), 16)
-        self.assertEqual(square_2.isOwned(), True)
+        self.assertEqual(renter.getTotalMoney(), 14)
+        self.assertEqual(owner.getTotalMoney(), 17)
+        self.assertEqual(square.isOwned(), True)
+
+    def test_process_transaction_all_property_owned(self):
+
+        """Test the process transaction fo all property of one colour owned"""
+        player = self.game.getPlayers()[0]
+        self.game.setCurrentPlayer(player)
+        player.setCurrPos(2)
+
+        square_1 = self.game.getBoard()[1]
+        square_2 = self.game.getBoard()[2]
+
+        # Set square 1 as bought by player
+        self.game.buyProperty(square_1, player, 5)
+        self.game.processTransaction()
+
+        self.assertEqual(square_2.getOwner(), player)
+        self.assertEqual(square_1.isOwned(), True)
+        self.assertEqual(self.game.isAllPropOwned(square_1.getColour(), player), True)
+        self.assertEqual(square_1.getRent(), 10)
+        self.assertEqual(square_2.getRent(), 10)
+
+    def test_is_all_prop_owned(self):
+        square_1 = self.game.getBoard()[1]
+        square_2 = self.game.getBoard()[2]
+
+        player = self.game.getPlayers()[0]
+
+        square_1.setOwner(player)
+        square_2.setOwner(player)
+
+        self.assertEqual(self.game.isAllPropOwned(square_1.getColour(), player), True)
 
 if __name__ == '__main__':
     unittest.main()
