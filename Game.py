@@ -100,26 +100,37 @@ class Game:
         if currentSquare.getType() != "go":
 
             if not currentSquare.isOwned():
-                # If the Square is owned, then current player buys the property
-                # Set rent of Square to non-zero value
 
-                currPlayer.spendMoney(currentSquare.getPrice())
-                currentSquare.setOwner(currPlayer)
-                currentSquare.setIsOwned()
-                currentSquare.setRent(10)
-                
-                print ( currPlayer.getName() + " bought " + currentSquare.getName() + " for $" + str(currentSquare.getPrice()))
+                self.buyProperty(currentSquare, currPlayer, 8)
+
                 # Also check if the current player now owns all of the properties of the same colour.
                 if self.isAllPropOwned(currentSquare.getColour(), currPlayer):
-
-                    currentSquare.setRent(currentSquare.getRent() * 2)
+                    # Increase the rent of all the properties
+                    self.doubleRent(currentSquare.getColour())
 
             else:
-                currPlayer.spendMoney(currentSquare.getRent())
-                owningPlayer = currentSquare.getOwner()
-                owningPlayer.addMoney(currentSquare.getRent())
-                print( currPlayer.getName() + " paid rent $" + str(currentSquare.getRent()) + " to " + currentSquare.getOwner().getName() + " for " + currentSquare.getName() + " who now has $" + str(currentSquare.getOwner().getTotalMoney()))
+                self.spendRent(currentSquare, currPlayer)
 
+    def buyProperty(self, prop, player, rent = 1):
+        """ Function to buy property provided by 'prop' owned by player with rent set to 'rent'"""
+        player.spendMoney(prop.getPrice())
+        prop.setOwner(player)
+        prop.setIsOwned()
+        prop.setRent(rent)
+
+    def doubleRent(self, colour):
+        """ Double the rent of all properties of a particular colour """
+        for square in self.board:
+            if (square.getColour() == colour):
+                square.setRent(square.getRent() * 2)
+
+    def spendRent(self, prop, renter):
+        """ Process rent payments for property prop from renter to owner """
+        renter.spendMoney(prop.getRent())
+
+        owner = prop.getOwner()
+        owner.addMoney(prop.getRent())
+        
     def isAllPropOwned(self, colour, player):
         """
         Check if all the properties of a particular colour are owned by one player
