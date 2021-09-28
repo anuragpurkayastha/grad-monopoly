@@ -43,4 +43,7 @@ class Player:
         return "Name: " + self.name + ", Total Money: $" + str(self.totalMoney) + ", Current Position: " + str(self.currentPos)
 
     def __eq__(self, other):
+        if other is None:
+            return False
+
         return self.name == other.name and self.totalMoney == other.totalMoney and self.currentPos == other.currentPos
