@@ -1,7 +1,44 @@
 # Woven Monopoly
 
-As part of the coding test for Pronto Software Graduate Program, I needed to build a small application that plays a game of woven Monopoly.
+As part of the coding test for Pronto Software Graduate Program, I needed to build a small application that plays a game of Woven Monopoly.
 
+# Usage
+The game was written using Python version 3.9.7. Execute the following command to run the program
+
+`
+python Main.py
+`
+The files are described below.
+
+  * **Main.py** - The file that executes the game.
+  * **Game.py** - Contains the game logic.
+  * **Square.py** - Contains the Square class which represents each square on the board.
+  * **Player.py** - Player class which represents a player of the game.
+
+The output should resemble the following.
+
+`
+$ python Main.py
+The winner is: Charlotte with $10!!
+
+The other results:
+
+Name:           Peter
+Total Money:    $14
+Final Position: The Grand Tofu
+
+Name:           Billy
+Total Money:    $29
+Final Position: Lanzhou Beef Noodle
+
+Name:           Charlotte
+Total Money:    $10
+Final Position: Massizim
+
+Name:           Sweedal
+Total Money:    $-1
+Final Position: Betty's Burgers
+`
 # Design
 
 The game will be created using Object Oriented programming using Python. Python was chosen for ease of reading JSON files, and faster implementation.
