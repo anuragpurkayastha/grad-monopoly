@@ -94,5 +94,39 @@ class TestGameMethod(unittest.TestCase):
 
         self.assertEqual(player.getCurrPos(), 3)
 
+        # Test if player is going to wrap around
+        player.setCurrPos(len(self.game.getBoard()) - 1)
+        self.game.movePlayer(player, 2)
+
+        self.assertEqual(player.getCurrPos(), 1)
+
+    def test_process_transaction(self):
+
+        # Test buying a property
+        player = self.game.getPlayers()[0]
+        player.setCurrPos(1)
+
+        square = self.game.getBoard()[player.getCurrPos()]
+
+        self.game.setCurrentPlayer(player)
+        self.game.processTransaction()
+
+        self.assertEqual(player.getTotalMoney(), 15)
+        self.assertEqual(square.isOwned(), True)
+        self.assertEqual(square.getOwner(), player)
+
+        # Test a player paying rent
+        player_2 = self.game.getPlayers()[1]
+        player_2.setCurrPos(1)
+
+        self.game.setCurrentPlayer(player_2)
+        self.game.processTransaction()
+
+        square_2 = self.game.getBoard()[player_2.getCurrPos()]
+        
+        self.assertEqual(player_2.getTotalMoney(), 15)
+        self.assertEqual(player.getTotalMoney(), 16)
+        self.assertEqual(square_2.isOwned(), True)
+
 if __name__ == '__main__':
     unittest.main()
