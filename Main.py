@@ -32,7 +32,7 @@ if __name__ == "__main__":
             board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
     # MOVES
-    filepath = './specs/rolls_1.json'
+    filepath = './specs/rolls_2.json'
     moves = list()
     with open(filepath) as file:
         moves = json.load(file)
