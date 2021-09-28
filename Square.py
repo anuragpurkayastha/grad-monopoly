@@ -59,3 +59,6 @@ class Square:
 
     def __repr__(self):
         return "Name: " + self.name + ", Price: " + str(self.price) + ", Colour: " + self.colour + ", Type: " + self.sqr_type + ", Owner: " + (self.owner.getName() if (self.owner != None) else "") + ", Rent: " + str(self.rent)
+
+    def __eq__(self,other):
+        return self.name == other.name and self.price == other.price and self.colour == other.colour and self.sqr_type == other.sqr_type and self.rent == other.rent and self.owned == other.owned
