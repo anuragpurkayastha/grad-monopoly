@@ -101,7 +101,7 @@ class Game:
 
             if not currentSquare.isOwned():
 
-                self.buyProperty(currentSquare, currPlayer, 8)
+                self.buyProperty(currentSquare, currPlayer)
 
                 # Also check if the current player now owns all of the properties of the same colour.
                 if self.isAllPropOwned(currentSquare.getColour(), currPlayer):
@@ -111,11 +111,10 @@ class Game:
             elif (currentSquare.getOwner().getName() != currPlayer.getName()):
                 self.spendRent(currentSquare, currPlayer)
 
-    def buyProperty(self, prop, player, rent = 1):
+    def buyProperty(self, prop, player):
         """
-        Function to buy property provided by 'prop' owned by player with rent set to 'rent'
+        Function to buy property provided by 'prop' owned by player with rent set to the price of the property.
         """
-
         player.spendMoney(prop.getPrice())
         prop.setOwner(player)
         prop.setIsOwned()
@@ -125,7 +124,6 @@ class Game:
         """
         Double the rent of all properties of a particular colour
         """
-
         for square in self.board:
             if (square.getColour() == colour):
                 square.setRent(square.getRent() * 2)
@@ -134,7 +132,6 @@ class Game:
         """
         Process rent payments for property prop from renter to owner
         """
-
         renter.spendMoney(prop.getRent())
         owner = prop.getOwner()
         owner.addMoney(prop.getRent())
@@ -192,6 +189,6 @@ class Game:
 
         for player in self.players:
 
-            player_det = "\tName: " + player.getName() + "\tTotal Money: $" + str(player.getTotalMoney()) + "\tFinal Position: " + self.board[player.getCurrPos()].getName()
+            player_det = "\tName: " + player.getName() + "\tTotal Money:\t$" + str(player.getTotalMoney()) + "\tFinal Position: " + self.board[player.getCurrPos()].getName()
 
             print (player_det)
