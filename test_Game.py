@@ -19,16 +19,16 @@ class TestGameMethod(unittest.TestCase):
                     ]
 
         self.game = Game()
+        self.game.createBoard()
+        self.game.createPlayers()
 
     def test_get_board(self):
-        self.game.createBoard()
-        self.assertCountEqual(self.game.getBoard(), self.board)
+        self.assertEqual(self.game.getBoard(), self.board)
 
     def test_get_players(self):
-        self.game.createPlayers()
         expected = [Player(name = "Peter"), Player(name = "Billy"), Player(name = "Charlotte"), Player(name = "Sweedal")]
 
-        self.assertCountEqual(self.game.getPlayers(), expected)
+        self.assertEqual(self.game.getPlayers(), expected)
 
 if __name__ == '__main__':
     unittest.main()
