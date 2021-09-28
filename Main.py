@@ -11,12 +11,15 @@ if __name__ == "__main__":
     #=============== SETUP ===========================
 
     # PLAYERS
-    players = list()
+    players_1 = [Player(name = "Peter"),
+                Player(name = "Billy"),
+                Player(name = "Charlotte"),
+                Player(name = "Sweedal")]
 
-    players.append(Player(name = "Peter"))
-    players.append(Player(name = "Billy"))
-    players.append(Player(name = "Charlotte"))
-    players.append(Player(name = "Sweedal"))
+    players_2 = [Player(name = "Peter"),
+                Player(name = "Billy"),
+                Player(name = "Charlotte"),
+                Player(name = "Sweedal")]
 
     # BOARD
     board = list()
@@ -44,11 +47,11 @@ if __name__ == "__main__":
         moves_2 = json.load(file)
 
     # SETUP THE GAME
-    game_1 = Game(board = board, players = players, moves = moves_1)
-    game_2 = Game(board = board, players = players, moves = moves_2)
+    game_1 = Game(board = board, players = players_1, moves = moves_1)
+    game_2 = Game(board = board, players = players_2, moves = moves_2)
 
-    print("=" * 20 + "\tGAME ONE\t" + "=" * 20)
-    print(moves_1)
+    print()
+    print("=" * 50 + "\tGAME ONE\t" + "=" * 50)
     # Loop while game is still valid
     while game_1.isValid():
 
@@ -69,8 +72,8 @@ if __name__ == "__main__":
 
     game_1.announceFinalResults()
 
-    print("=" * 20 + "\tGAME TWO\t" + "=" * 20)
-    print(moves_2)
+    print()
+    print("=" * 50 + "\tGAME TWO\t" + "=" * 50)
     while game_2.isValid():
 
         # Set the next player
