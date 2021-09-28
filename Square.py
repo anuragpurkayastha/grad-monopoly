@@ -6,7 +6,7 @@ from Player import Player
 
 class Square:
 
-    def __init__(self, name, price = 0, colour= "", sqr_type = "", owner = Player(), rent = 0):
+    def __init__(self, name = "", price = 0, colour= "", sqr_type = "", owner = None, rent = 0):
         self.name = name
         self.price = price
         self.colour = colour
@@ -18,8 +18,15 @@ class Square:
     def getName(self):
         return self.name
 
+    def setName(self, name):
+        self.name = name
+
     def getPrice(self):
         return self.price
+
+    def setPrice(self,price):
+        """Takes a number value for the price"""
+        self.price = price
 
     def getColour(self):
         return self.colour
@@ -27,10 +34,15 @@ class Square:
     def getType(self):
         return self.sqr_type
 
+    def setType(self, sqr_type):
+        """Takes a string as the type parameter (sqr_type)"""
+        self.sqr_type = sqr_type
+
     def getOwner(self):
         return self.owner
 
     def setOwner(self, player):
+        """Takes a Player object for the player"""
         self.owner = player
 
     def isOwned(self):
@@ -45,5 +57,5 @@ class Square:
     def setRent(self, rent):
         self.rent = rent
 
-    def toString(self):
-        return "Name:\t" + self.name + "\nPrice:\t" + str(self.price) + "\nColour:\t" + self.colour + "\nType:\t" + self.sqr_type + "\nOwner:\t" + self.owner.getName() + "\nRent:\t" + str(self.rent)
+    def __repr__(self):
+        return "Name: " + self.name + ", Price: " + str(self.price) + ", Colour: " + self.colour + ", Type: " + self.sqr_type + ", Owner: " + (self.owner.getName() if (self.owner != None) else "") + ", Rent: " + str(self.rent)
