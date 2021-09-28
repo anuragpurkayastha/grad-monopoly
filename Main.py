@@ -32,30 +32,59 @@ if __name__ == "__main__":
             board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
     # MOVES
-    filepath = './specs/rolls_2.json'
-    moves = list()
-    with open(filepath) as file:
-        moves = json.load(file)
+    filepath_1 = './specs/rolls_1.json'
+    filepath_2 = './specs/rolls_2.json'
+    moves_1 = list()
+    moves_2 = list()
+
+    with open(filepath_1) as file:
+        moves_1 = json.load(file)
+
+    with open(filepath_2) as file:
+        moves_2 = json.load(file)
 
     # SETUP THE GAME
-    game = Game(board = board, players = players, moves = moves)
+    game_1 = Game(board = board, players = players, moves = moves_1)
+    game_2 = Game(board = board, players = players, moves = moves_2)
 
+    print("=" * 20 + "\tGAME ONE\t" + "=" * 20)
+    print(moves_1)
     # Loop while game is still valid
-    while game.isValid():
+    while game_1.isValid():
 
         # Set the next player
-        game.setCurrentPlayer(game.getPlayers()[game.getCurrentPlayerIndex()])
+        game_1.setCurrentPlayer(game_1.getPlayers()[game_1.getCurrentPlayerIndex()])
 
         # Set the amount of moves to move the current player
-        game.setCurrentMove()
+        game_1.setCurrentMove()
 
         # Move the current player
-        game.movePlayer(game.getCurrentPlayer(), game.getCurrentMove())
+        game_1.movePlayer(game_1.getCurrentPlayer(), game_1.getCurrentMove())
 
         # Process transactions
-        game.processTransaction()
+        game_1.processTransaction()
 
         # End turn
-        game.endTurn()
+        game_1.endTurn()
 
-    game.announceFinalResults()
+    game_1.announceFinalResults()
+
+    print("=" * 20 + "\tGAME TWO\t" + "=" * 20)
+    print(moves_2)
+    while game_2.isValid():
+
+        # Set the next player
+        game_2.setCurrentPlayer(game_2.getPlayers()[game_2.getCurrentPlayerIndex()])
+
+        # Set the amount of moves to move the current player
+        game_2.setCurrentMove()
+
+        # Move the current player
+        game_2.movePlayer(game_2.getCurrentPlayer(), game_2.getCurrentMove())
+        # Process transactions
+        game_2.processTransaction()
+
+        # End turn
+        game_2.endTurn()
+
+    game_2.announceFinalResults()
