@@ -91,3 +91,4 @@ if __name__ == "__main__":
         game_2.endTurn()
 
     game_2.announceFinalResults()
+    print()
