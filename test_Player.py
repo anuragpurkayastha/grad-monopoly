@@ -30,13 +30,13 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertEqual(self.player_2.getTotalMoney(), 14)
 
     def test_set_money(self):
-        self.player_1.setMoney(35)
+        self.player_1.setTotalMoney(35)
 
         self.assertEqual(self.player_1.getTotalMoney(), 35)
 
     def test_is_bankrupt(self):
-        self.player_1.setMoney(2)
-        self.player_2.setMoney(-15)
+        self.player_1.setTotalMoney(2)
+        self.player_2.setTotalMoney(-15)
 
         self.assertEqual(self.player_1.isBankrupt(), False)
         self.assertEqual(self.player_2.isBankrupt(), True)
@@ -49,13 +49,6 @@ class TestPlayerMethods(unittest.TestCase):
         self.player_1.setCurrPos(4)
 
         self.assertEqual(self.player_1.getCurrPos(), 4)
-
-    def test_to_string(self):
-        result_1 = "Name:\t\t\nTotal Money:\t$16\nCurrent Position:\t\t0"
-        result_2 = "Name:\t\tMike\nTotal Money:\t$20\nCurrent Position:\t\t0"
-
-        self.assertEqual(self.player_1.toString(), result_1)
-        self.assertEqual(self.player_2.toString(), result_2)
 
 if __name__ == '__main__':
     unittest.main()
