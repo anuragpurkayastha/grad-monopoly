@@ -27,7 +27,7 @@ class Player:
         if ( amt >= 0 ):
             self.totalMoney -= amt
 
-    def setMoney(self, amt):
+    def setTotalMoney(self, amt):
         self.totalMoney = amt
 
     def isBankrupt(self):
