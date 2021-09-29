@@ -46,6 +46,7 @@ class Game:
         for player in self.players:
 
             if player.isBankrupt():
+                print(player.getName() + " went bankrupt!")
                 return False
 
         return True
@@ -86,14 +87,13 @@ class Game:
             # Also earn $1 for passing GO
             player.setCurrPos(moves - ((len(self.board) - 1) - playerCurrentPos) - 1)
             player.addMoney(1)
-
         else:
             player.setCurrPos(playerCurrentPos + moves)
 
     def processTransaction(self):
 
         # Get the Square that the player is currently on
-        currPlayer = self.getCurrentPlayer()
+        currPlayer = self.currPlayer
         currentSquare = self.board[currPlayer.getCurrPos()]
 
         # If the Square the player is currently on is not "GO" then process a transaction (either buying property or paying rent
@@ -185,7 +185,7 @@ class Game:
 
         print ("The winner is: " + winningPlayer.getName() + " with $" + str(winningPlayer.getTotalMoney()) + "!!")
 
-        print("\nThe other results:")
+        print("\nThe results:")
 
         for player in self.players:
 
