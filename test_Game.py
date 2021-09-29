@@ -74,7 +74,7 @@ class TestGameMethod(unittest.TestCase):
 
         # Test if a player is bankrupt
         player = self.game.getPlayers()[0]
-        player.setMoney(0)
+        player.setTotalMoney(0)
 
         self.assertEqual(self.game.isValid(), False)
 
@@ -111,9 +111,52 @@ class TestGameMethod(unittest.TestCase):
 
         self.assertEqual(player.getCurrPos(), 1)
 
-    def test_process_transaction_buy(self):
+    def test_buy_property(self):
+        square = self.game.getBoard()[2]
 
+        player = self.game.getPlayers()[1]
+
+        self.game.buyProperty(square, player)
+
+        self.assertEqual(square.isOwned(), True)
+        self.assertEqual(square.getOwner(), player)
+        self.assertEqual(square.getRent(), square.getPrice())
+        self.assertEqual(player.getTotalMoney(), 15)
+
+    def test_double_rent(self):
+
+        # The only brown properties are at positions 1 and 2 of the board.
+        test_sqr = self.game.getBoard()[1]
+        test_sqr.setRent(2)
+        test_sqr_2 = self.game.getBoard()[2]
+        test_sqr_2.setRent(3)
+
+        # Square 3 is a differnet colour
+        test_sqr_diff_colour = self.game.getBoard()[3]
+        test_sqr_diff_colour.setRent(1)
+
+        self.game.doubleRent(test_sqr.getColour())
+
+        self.assertEqual(test_sqr.getRent(), 4)
+        self.assertEqual(test_sqr_2.getRent(), 6)
+        self.assertEqual(test_sqr_diff_colour.getRent(), 1)
+
+    def test_spend_rent(self):
+        owner = self.game.getPlayers()[1]
+        renter = self.game.getPlayers()[2]
+
+        test_prop = self.game.getBoard()[1]
+        test_prop.setRent(4)
+        test_prop.setOwner(owner)
+
+        self.game.spendRent(test_prop, renter)
+
+        self.assertEqual(owner.getTotalMoney(), 20)
+        self.assertEqual(renter.getTotalMoney(), 12)
+
+    def test_process_transaction_buy(self):
         """ Test transaction for buying a property"""
+
         player = self.game.getPlayers()[0]
         player.setCurrPos(1)
 
@@ -193,6 +236,31 @@ class TestGameMethod(unittest.TestCase):
         square_2.setOwner(player)
 
         self.assertEqual(self.game.isAllPropOwned(square_1.getColour(), player), True)
+
+    def test_end_turn(self):
+        self.game.setCurrentPlayerIndex(2)
+        self.game.setMoveIndex(5)
+
+        self.game.endTurn()
+
+        self.assertEqual(self.game.getCurrentPlayerIndex(), 3)
+        self.assertEqual(self.game.getMoveIndex(), 6)
+
+    def test_end_turn_wrap_around(self):
+        """ Test the endTurn method when the current player index is at the last player """
+        self.game.setCurrentPlayerIndex(len(self.game.getPlayers()) - 1)
+        self.game.setMoveIndex(5)
+
+        self.game.endTurn()
+
+        self.assertEqual(self.game.getCurrentPlayerIndex(), 0)
+        self.assertEqual(self.game.getMoveIndex(), 6)
+
+    def test_get_winner(self):
+        winner = self.game.getPlayers()[3]
+        winner.setTotalMoney(40)
+
+        self.assertEqual(self.game.getWinner(), winner)
 
 if __name__ == '__main__':
     unittest.main()
