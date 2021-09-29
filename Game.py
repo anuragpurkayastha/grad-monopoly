@@ -55,7 +55,6 @@ class Game:
         for player in self.players:
 
             if player.isBankrupt():
-                print(player.getName() + " went bankrupt!")
                 return False
 
         return True
