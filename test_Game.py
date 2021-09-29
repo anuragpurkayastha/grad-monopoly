@@ -9,12 +9,10 @@ class TestGameMethod(unittest.TestCase):
     def setUp(self):
 
         # PLAYERS
-        players = list()
-
-        players.append(Player(name = "Peter"))
-        players.append(Player(name = "Billy"))
-        players.append(Player(name = "Charlotte"))
-        players.append(Player(name = "Sweedal"))
+        self.players = [Player(name = "Peter"),
+                        (Player(name = "Billy")),
+                        (Player(name = "Charlotte")),
+                        (Player(name = "Sweedal"))]
 
         # BOARD
         board = list()
@@ -38,7 +36,7 @@ class TestGameMethod(unittest.TestCase):
             moves = json.load(file)
 
         # SETUP THE GAME
-        self.game = Game(board = board, players = players, moves = moves)
+        self.game = Game(board = board, players = self.players, moves = moves)
 
     def test_get_board(self):
 
@@ -59,7 +57,7 @@ class TestGameMethod(unittest.TestCase):
 
         self.assertEqual(self.game.getPlayers(), expected)
 
-    def test_load_moves(self):
+    def test_get_moves(self):
         expected_1 = [1, 3, 1, 1, 1, 2, 4, 2, 6, 3, 5, 2, 2, 2, 4, 4, 6, 1, 4, 2, 6, 2, 1, 5, 4, 5, 6, 5, 6, 3, 6, 4, 4, 3, 5, 6, 2, 1, 6, 5, 1, 1, 6, 4, 5, 2, 2, 3, 5, 6]
 
         self.assertEqual(self.game.getMoves(), expected_1)
@@ -83,6 +81,19 @@ class TestGameMethod(unittest.TestCase):
         # Test if no more moves left
         self.game.setMoveIndex(len(self.game.getMoves()) + 1)
         self.assertEqual(self.game.isValid(), False)
+
+    def test_get_current_player_index(self):
+        self.assertEqual(self.game.getCurrentPlayerIndex(), 0)
+
+    def test_get_current_player(self):
+        self.assertEqual(self.game.getPlayers()[0], self.players[0])
+
+    def test_set_current_player(self):
+        test_player = Player(name = "Testing")
+
+        self.game.setCurrentPlayer(test_player)
+
+        self.assertEqual(self.game.getCurrentPlayer(), test_player)
 
     def test_move_player(self):
         player = self.game.getPlayers()[0]
