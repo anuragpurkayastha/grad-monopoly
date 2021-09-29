@@ -15,10 +15,19 @@ class Game:
     def getBoard(self):
         return self.board
 
+    def setBoard(self, board):
+        """
+        board is a list of Square objects
+        """
+        self.board = board
+
     def getPlayers(self):
         return self.players
 
     def setPlayers(self, players):
+        """
+        players is a list of Player objects
+        """
         self.players = players
 
     def getMoves(self):
