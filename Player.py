@@ -17,7 +17,7 @@ class Player:
     def getTotalMoney(self):
         return self.totalMoney
 
-    def addMoney(self, amt):
+    def earnMoney(self, amt):
 
         if ( amt >= 0 ):
             self.totalMoney += amt
