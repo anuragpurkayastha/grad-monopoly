@@ -15,9 +15,9 @@ class TestPlayerMethods(unittest.TestCase):
         self.assertEqual(self.player_1.getTotalMoney(), 16)
         self.assertEqual(self.player_2.getTotalMoney(), 20)
 
-    def test_add_money(self):
-        self.player_1.addMoney(2)
-        self.player_2.addMoney(10)
+    def test_earn_money(self):
+        self.player_1.earnMoney(2)
+        self.player_2.earnMoney(10)
 
         self.assertEqual(self.player_1.getTotalMoney(), 18)
         self.assertEqual(self.player_2.getTotalMoney(), 30)
