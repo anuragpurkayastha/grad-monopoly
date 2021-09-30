@@ -1,5 +1,5 @@
 """
-    Game.py
+    Game class - Represents an instance of a Game with a list of Squares, Players and moves
 """
 class Game:
 

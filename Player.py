@@ -1,8 +1,5 @@
 """
-    Player.py
-
-    Author: Anurag Purkayastha
-    Date: 27 September 2021
+    Player class represents a player of the game
 """
 class Player:
 

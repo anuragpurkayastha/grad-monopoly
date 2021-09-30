@@ -1,6 +1,5 @@
 """
-    Square.py
-    Author: Anurag Purkayastha
+    Square class represents one square on the board
 """
 from Player import Player
 
