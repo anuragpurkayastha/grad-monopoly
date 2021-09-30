@@ -94,7 +94,7 @@ class Game:
             # This is done by checking if the end position (without wrap around) is beyond the last indicie of the board.
             # Also earn $1 for passing GO
             player.setCurrPos(moves - ((len(self.board) - 1) - playerCurrentPos) - 1)
-            player.addMoney(1)
+            player.earnMoney(1)
         else:
             player.setCurrPos(playerCurrentPos + moves)
 
@@ -142,7 +142,7 @@ class Game:
         """
         renter.spendMoney(prop.getRent())
         owner = prop.getOwner()
-        owner.addMoney(prop.getRent())
+        owner.earnMoney(prop.getRent())
 
     def isAllPropOwned(self, colour, player):
         """
