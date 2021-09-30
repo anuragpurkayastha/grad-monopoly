@@ -52,10 +52,11 @@ if __name__ == "__main__":
 
     print()
     print("=" * 50 + "\tGAME ONE\t" + "=" * 50)
+
     # Loop while game is still valid
     while game_1.isValid():
 
-        # Set the next player
+        # Set the current player
         game_1.setCurrentPlayer(game_1.getPlayers()[game_1.getCurrentPlayerIndex()])
 
         # Set the amount of moves to move the current player
@@ -64,19 +65,23 @@ if __name__ == "__main__":
         # Move the current player
         game_1.movePlayer(game_1.getCurrentPlayer(), game_1.getCurrentMove())
 
-        # Process transactions
+        # Process transactions - buying property or paying rent
         game_1.processTransaction()
 
-        # End turn
+        # End turn - get the next player (index) and the next move (index).
         game_1.endTurn()
 
+    # Game ended so print the final results
     game_1.announceFinalResults()
 
     print()
+
+    # Repeat for Game 2
     print("=" * 50 + "\tGAME TWO\t" + "=" * 50)
+
     while game_2.isValid():
 
-        # Set the next player
+        # Set the current player
         game_2.setCurrentPlayer(game_2.getPlayers()[game_2.getCurrentPlayerIndex()])
 
         # Set the amount of moves to move the current player
@@ -84,6 +89,7 @@ if __name__ == "__main__":
 
         # Move the current player
         game_2.movePlayer(game_2.getCurrentPlayer(), game_2.getCurrentMove())
+
         # Process transactions
         game_2.processTransaction()
 
