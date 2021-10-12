@@ -21,7 +21,7 @@ python Main.py
 
 The output should resemble the output below.
 
-`
+```
 $ python Main.py 
 
 ==================================================      GAME ONE        ==================================================
@@ -41,7 +41,7 @@ The results:
         Name: Billy     Total Money:    $8      Final Position: GO
         Name: Charlotte Total Money:    $-1     Final Position: Lanzhou Beef Noodle
         Name: Sweedal   Total Money:    $7      Final Position: GO
-`
+```
 
 There are a few test files named in the form "test_<Module>.py". These run some tests against the methods of the corresponding module.
 
