@@ -111,16 +111,22 @@ The game logic will be implemented as follows.
 
 1.  First check if any player is bankrupt or if there are no more moves to play.
  
-    If either condition is met => Quit the game and announce the winner and final results.
+    If either condition is met then quit the game and announce the winner and final results.
+
 2.  Get the next Player whose turn it is.
+
 3.  Get the amount of moves [x] that the Player must take.
-4.  Move the Player to the Square [x] units away from the Player's current position => update Player's current position.
+
+4.  Move the Player to the Square [x] units away from the Player's current position. Also update Player's current position.
 
     If the destination Square is beyond the total number of squares (length of the list of Squares) then wrap around.
+
 5. Check the Square for a pre-existing owner:
 
-   If Square is owned, charge current Player rent => Reduce current player's totalMoney by amount equal to 'rent' attribute of Square and increase owner's money by the rent amount.
-   If Square is not owned, then Player buys property => Reduce current player's totalMoney by amount equal to "price" attribute of Square => change ownership property of Square and initialise rent of the property (default set to the price of the property).
+   If Square is owned, charge current Player rent. Reduce current player's totalMoney by amount equal to 'rent' attribute of Square and increase owner's money by the rent amount.
+
+   If Square is not owned, then Player buys property. Reduce current player's totalMoney by amount equal to "price" attribute of Square. Also change ownership property of Square and initialise rent of the property (default set to the price of the property).
+
 6. Go to step 1.
 
 ## Main
