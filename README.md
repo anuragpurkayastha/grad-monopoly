@@ -110,6 +110,7 @@ The Squares on the board have a corresponding index, with "GO" being at index 0 
 The game logic will be implemented as follows.
 
   1. First check if any player is bankrupt or if there are no more moves to play.
+
     a. If either condition is met => Quit the game and announce the winner and final results.
   2. Get the next Player whose turn it is.
   3. Get the amount of moves [x] that the Player must take.
