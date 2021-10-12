@@ -43,7 +43,7 @@ The results:
         Name: Sweedal   Total Money:    $7      Final Position: GO
 ```
 
-There are a few test files named in the form "test_\<Module\>.py". These run some tests against the methods of the corresponding module.
+There are a few test files named in the form `test_<Module>.py`. These run some tests against the methods of the corresponding module.
 
 # Design
 The game was created using Object Oriented programming using Python. Python was chosen for ease of reading JSON files, and faster implementation.
