@@ -125,7 +125,7 @@ class Game:
         """
         player.spendMoney(prop.getPrice())
         prop.setOwner(player)
-        prop.setIsOwned()
+        prop.setIsOwned(True)
         prop.setRent(prop.getPrice())
 
     def doubleRent(self, colour):
