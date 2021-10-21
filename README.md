@@ -1,4 +1,4 @@
-# Woven Monopoly
+# Grad Monopoly
 As part of a coding test for a Graduate Program, I needed to build a small application that plays a game of Woven Monopoly.
 
 The rules can be found in the `README.md` file in the `specs` folder.
