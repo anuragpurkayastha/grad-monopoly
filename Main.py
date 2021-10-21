@@ -22,7 +22,7 @@ if __name__ == "__main__":
                 Player(name = "Sweedal")]
 
     # BOARD
-    board = list()
+    board_1 = list()
     # Read in the board.json file to create a list of squares
     with open('specs/board.json') as file:
         sqr_data = json.load(file)
@@ -30,9 +30,21 @@ if __name__ == "__main__":
     for i in range(0, len(sqr_data)):
         sqr = sqr_data[i]
         if (sqr['type'] != "go"):
-            board.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
+            board_1.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
         else:
-            board.append(Square(name = sqr['name'], sqr_type = sqr['type']))
+            board_1.append(Square(name = sqr['name'], sqr_type = sqr['type']))
+
+    board_2 = list()
+    # Read in the board.json file to create a list of squares
+    with open('specs/board.json') as file:
+        sqr_data = json.load(file)
+
+    for i in range(0, len(sqr_data)):
+        sqr = sqr_data[i]
+        if (sqr['type'] != "go"):
+            board_2.append(Square(name = sqr['name'], price = sqr['price'], colour = sqr['colour'], sqr_type = sqr['type']))
+        else:
+            board_2.append(Square(name = sqr['name'], sqr_type = sqr['type']))
 
     # MOVES
     filepath_1 = './specs/rolls_1.json'
@@ -47,8 +59,8 @@ if __name__ == "__main__":
         moves_2 = json.load(file)
 
     # SETUP THE GAME
-    game_1 = Game(board = board, players = players_1, moves = moves_1)
-    game_2 = Game(board = board, players = players_2, moves = moves_2)
+    game_1 = Game(board = board_1, players = players_1, moves = moves_2)
+    game_2 = Game(board = board_2, players = players_2, moves = moves_1)
 
     print()
     print("=" * 50 + "\tGAME ONE\t" + "=" * 50)
