@@ -25,6 +25,10 @@ class TestSquareMethods(unittest.TestCase):
         self.square_1.setPrice(15)
         self.assertEqual(self.square_1.getPrice(), 15)
 
+    def test_set_price_error(self):
+        """Test that the setPrice() method throws an error when given a non-number as a parameter"""
+        self.assertRaises(TypeError, self.square_1.setPrice, "bubbles")
+
     def test_get_colour(self):
         self.assertEqual(self.square_1.getColour(), "")
         self.assertEqual(self.square_2.getColour(), "Green")
@@ -50,9 +54,16 @@ class TestSquareMethods(unittest.TestCase):
         self.assertEqual(self.square_2.isOwned(), False)
 
     def test_set_is_owned(self):
-        self.square_1.setIsOwned()
 
+        self.square_1.setIsOwned(True)
         self.assertEqual(self.square_1.isOwned(), True)
+
+        self.square_1.setIsOwned(False)
+        self.assertEqual(self.square_1.isOwned(), False)
+
+    def test_set_is_owned_error(self):
+        """Test if the method throws an Exception when given a non-boolean argument"""
+        self.assertRaises(TypeError, self.square_1.setIsOwned, 42)
 
     def test_get_rent(self):
         self.assertEqual(self.square_1.getRent(), 0)
