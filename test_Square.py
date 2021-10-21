@@ -73,5 +73,8 @@ class TestSquareMethods(unittest.TestCase):
         self.square_1.setRent(17)
         self.assertEqual(self.square_1.getRent(), 17)
 
+    def test_set_rent_error(self):
+        self.assertRaises(TypeError, self.square_1.setRent, "rent$")
+
 if __name__ == '__main__':
     unittest.main()
