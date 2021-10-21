@@ -59,8 +59,8 @@ if __name__ == "__main__":
         moves_2 = json.load(file)
 
     # SETUP THE GAME
-    game_1 = Game(board = board_1, players = players_1, moves = moves_2)
-    game_2 = Game(board = board_2, players = players_2, moves = moves_1)
+    game_1 = Game(board = board_1, players = players_1, moves = moves_1)
+    game_2 = Game(board = board_2, players = players_2, moves = moves_2)
 
     print()
     print("=" * 50 + "\tGAME ONE\t" + "=" * 50)
