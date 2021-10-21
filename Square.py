@@ -25,7 +25,10 @@ class Square:
 
     def setPrice(self,price):
         """Takes a number value for the price"""
-        self.price = price
+        if (isinstance(price, (float, int))):
+            self.price = price
+        else:
+            raise TypeError("Price must be a number")
 
     def getColour(self):
         return self.colour
@@ -47,8 +50,12 @@ class Square:
     def isOwned(self):
         return self.owned
 
-    def setIsOwned(self):
-        self.owned = True
+    def setIsOwned(self, owned):
+
+        if (isinstance(owned, bool)):
+            self.owned = owned
+        else:
+            raise TypeError("owned must be a boolean (true or false)")
 
     def getRent(self):
         return self.rent
