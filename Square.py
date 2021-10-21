@@ -55,13 +55,17 @@ class Square:
         if (isinstance(owned, bool)):
             self.owned = owned
         else:
-            raise TypeError("owned must be a boolean (true or false)")
+            raise TypeError("Expecting a boolean (true or false)")
 
     def getRent(self):
         return self.rent
 
     def setRent(self, rent):
-        self.rent = rent
+
+        if (isinstance(rent, (int, float))):
+            self.rent = rent
+        else:
+            raise TypeError("Expecting a number (int or float)")
 
     def __repr__(self):
         return "Name: " + self.name + ", Price: " + str(self.price) + ", Colour: " + self.colour + ", Type: " + self.sqr_type + ", Owner: " + (self.owner.getName() if (self.owner != None) else "") + ", Rent: " + str(self.rent)
